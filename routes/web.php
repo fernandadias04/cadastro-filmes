@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/movies')->name('home');
+
+Route::middleware(['auth'])
+    ->prefix('movies')
+    ->as('movies.')
+    ->group(function() {
+
+        Route::get('/', [MovieController::class, 'index'])->name('index');
+        Route::get('/edit', [MovieController::class, 'edit'])->name('edit');
+        Route::post('/edit', [MovieController::class, 'update'])->name('update');
+        Route::get('/create', [MovieController::class, 'create'])->name('create');
+        Route::post('/create', [MovieController::class, 'update'])->name('update');
+        Route::delete('/delete', [MovieController::class, 'destroy'])->name('destroy');
+
+    }
+    );
+
+
+require __DIR__.'/auth.php';
