@@ -1,84 +1,38 @@
-@section('content')
+<head>
+    <link rel="stylesheet" href="{{mix('css/app.css')}}">
+</head>
+<div class="container mx-auto">
+    <div class="grid-cols-1">
 
-<form method="POST" action="{{ isset($movie)? route('movies.edit') ['id' => $movie->id]) : route('movies.create)}}">
-    @csrf
-
-    <div>
-        <label for="name">{{__('Film's Name')}}</label>
-        <input id="name"  type="text" name="name" value="{{old('name', isset($movie)? $movie->name :'')}}" required autofocus />
-    </div>
-
-    <div>
-        <label>{{__('Film's Director')}}</label>
-        <input id="director" name="director" />
-    </div>
-
-    <div>
-        <label>{{__('Film's Length')}}</label>
-        <input id="duration" name="duration" />
-    </div>
-
-    <div>
-        <label>{{__('User Score')}}</label>
-        <input id="punctuationr" name="punctuation" />
-    </div>
-
-    <div>
-        <label>{{__('Film's Director')}}</label>
-        <input id="director" name="director" />
-    </div>
-
-    <div id="actores">
-        <label>{{__('Film's Actors')}}</label>
-        @if (isset($movie))
-            @foreach ($actors as $actor)
-
-            <div id="movie{{$index}}">
-
-                <div>
-                    <input type="text" name="actors[{{$index}}][id]"  value="{{$actor->name}}" />
-                    <input type="hidden" name="options[{{$index}}][id]" value="{{$actor->id}}"/>
-                </div>
-
-                <div>
-                    <button class="btn btn-outline-danger" type="button" onclick="document.getElementById('actor{{$index}}').remove()">Excluir</button>
-                </div>
-
-            </div>
-
-            @endforeach
-
-        @endif
+    <form method="POST" action="{{ isset($movie)? route('movies.update', ['id' => $movie->id] ) : route('movies.store') }}" >
+        @csrf
 
         <div>
-            <div id="actorGroupHide">
-                <div id="actorHide">
-
-                    <div>
-                        <input type="text" class="form-control">
-                    </div>
-
-                    <div>
-                        <button class="btn btn-outline-danger" type="button" onclick="this.parentNode.remove()">Excluir</button>
-                    </div>
-
-                </div>
-            </div>
+            <label class="block" for="name" >{{__('Movie Title')}}</label>
+            <input id="name" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="you@example.com"  type="text" name="name" value="{{old('name', isset($movie)? $movie->name :'')}}" required autofocus />
         </div>
+
+        <div>
+            <label>{{__('Movie Director')}}</label>
+            <input id="director" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  name="director" value="{{old('name', isset($movie)? $movie->director :'')}}" required autofocus />
+        </div>
+
+        <div>
+            <label>{{__('Movie Length')}}</label>
+            <input id="duration" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  name="duration" value="{{old('name', isset($movie)? $movie->duration :'')}}" required autofocus />
+        </div>
+
+        <div>
+            <label>{{__('User Score')}}</label>
+            <input id="punctuationr" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  name="punctuation" value="{{old('name', isset($movie)? $movie->punctuation :'')}}" required autofocus />
+        </div>
+
+
+        <div>
+            <button type="submit" class="block w-full text-sm text-slate-500">{{__('Save')}}</button>
+        </div>
+    </form>
+
     </div>
+</div>
 
-</form>
-
-<script>
-     var butAdd = document.getElementById("add");
-    butAdd.addEventListener('click', function(){
-        var optionHide = document.getElementById("optionHide");
-        var opClone =optionHide.cloneNode(true);
-        opClone.id = null;
-        opClone.style.display = 'block';
-        var inputHide = opClone.getElementsByTagName('input')[0];
-        inputHide.name = 'optionsHide[]';
-        var optionGroupHide = document.getElementById('optionGroupHide');
-        optionGroupHide.appendChild(opClone);
-    });
-</script>

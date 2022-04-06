@@ -17,8 +17,8 @@ class CreateActorsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->char('name');
-            $table->unsignedBigInteger('movie_id');
-            $table->foreign(['movie_id'])->on('novies')->references('id')->onDelete('cascade');
+            $table->foreignId('movie_id')->onDelete('cascade');
+
         });
     }
 

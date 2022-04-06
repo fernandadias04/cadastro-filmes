@@ -6,6 +6,7 @@ use App\Models\Actor;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Symfony\Component\HttpFoundation\Response;
 
 class MovieController extends Controller
 {
@@ -21,28 +22,34 @@ class MovieController extends Controller
 
     public function store (Request $request)
     {
-        $actors = $request->get('optionsHide');
+
 
         $movie = Movie::create([
             'name'=>$request->get('name'),
             'director'=>$request->get('director'),
             'duration'=>$request->get('duration'),
-            'punctuation'=>$request->get('punctuation')
+            'punctuation'=>$request->get('punctuation'),
+            'user_id'=>auth()->id()
         ]);
 
-        foreach($actors as $actor){
-            Actor::create([
-                'name'=>$actor,
-                'movie_id'=>$movie->id
-            ]);
-        }
 
-        return redirect()->route('movie.index');
+
+
+        return redirect()->route('movies.index');
     }
 
     public function edit ($id)
     {
+        $movie = Movie::findOrFail($id);
 
+        if($movie->user_id != auth()->id()){
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+        return view('movie.form', [
+            'movie'=>$movie,
+            'pageTitlle'=>_('Editing Movie: :name', ['name' => $movie->name])
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -55,6 +62,8 @@ class MovieController extends Controller
             'duration'=>$request->get('duration'),
             'punctuation'=>$request->get('punctuation')
         ]);
+
+
 
 
     }

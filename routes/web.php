@@ -22,10 +22,10 @@ Route::middleware(['auth'])
     ->group(function() {
 
         Route::get('/', [MovieController::class, 'index'])->name('index');
-        Route::get('/edit', [MovieController::class, 'edit'])->name('edit');
-        Route::post('/edit', [MovieController::class, 'update'])->name('update');
+        Route::get('/edit/{id}', [MovieController::class, 'edit'])->name('edit');
+        Route::post('/edit/{id}', [MovieController::class, 'update'])->name('update');
         Route::get('/create', [MovieController::class, 'create'])->name('create');
-        Route::post('/create', [MovieController::class, 'update'])->name('update');
+        Route::post('/create', [MovieController::class, 'store'])->name('store');
         Route::delete('/delete', [MovieController::class, 'destroy'])->name('destroy');
 
     }

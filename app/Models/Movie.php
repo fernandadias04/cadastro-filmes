@@ -17,7 +17,7 @@ class Movie extends Model
         'user_id'
     ];
 
-    public $timestamps = false;
+
 
     public function actors()
     {

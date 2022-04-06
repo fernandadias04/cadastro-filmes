@@ -21,7 +21,7 @@ class CreateMoviesTable extends Migration
             $table->integer('duration');
             $table->integer('punctuation');
             $table->unsignedBigInteger('user_id');
-            $table->foreign(['user_id'])->on('movies')->references('id')->onDelete('cascade');
+            $table->foreign(['user_id'])->on('users')->references('id')->onDelete('cascade');
         });
     }
 
