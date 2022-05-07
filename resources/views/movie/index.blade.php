@@ -1,20 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <header>
+@extends('movie.parts.desing')
 
-    </header>
+@section('conteudo')
 
-   <li>
-       <a href="{{route('movies.create')}}">
-            {{__('New Movie')}}
-       </a>
-   </li>
-</body>
-</html>
+<table class="table-auto">
+    <thead>
+        <tr>
+           <th> Movies</th>
+           <th></th>
+           <th></th>
+        </tr>
+    </thead>
+
+     <tbody>
+
+        @foreach ($movies as  $movie)
+            <tr>
+
+                <td><a href="#">{{$movie->name}}</a></td>
+                <td>Edit</td>
+                <td>
+                    <form method="POST" action="{{route('movies.destroy', ['id'=>$movie->id])}}" onsubmit="return confirm('Tem certeza que deseja remover {{ addslashes( $movie->name )}}?')">
+                        @csrf
+                        @method('delete')
+                        <button >Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+
+         @endforeach
+
+    </tbody>
+
+</table>
+
+
+   @endsection

@@ -10,9 +10,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MovieController extends Controller
 {
-    public function index ()
+    public function index (Request $request)
     {
-        return view('movie.index', ['page_Title'=>__('CadastroFilmes')]);
+        $query = Movie::query();
+
+        $query->where('user_id', '=', auth()->id());
+
+        if ($request->has('search')) {
+            $pattern = '%'.str_replace(' ', '%', $request->get('search')).'%';
+
+            $query->where('name', 'like', $pattern);
+        }
+
+        $query->orderBy('name', 'ASC');
+
+        $movies = $query->paginate(10);
+        $movies->appends($request->all());
+
+        return view('movie.index', [
+             'movies' => $movies,
+             'page_Title'=>__('CadastroFilmes')]
+        );
     }
 
     public function create ()
@@ -76,9 +94,9 @@ class MovieController extends Controller
 
         $request->session()->flash(
             'mensagem',
-            "Enquete removida com sucesso"
+            "Movie removed"
         );
 
-        return redirect()->route('');
+        return redirect()->route('movies.index');
     }
 }

@@ -1,4 +1,6 @@
+@extends('movie.parts.desing')
 
+@section('conteudo')
 <div>
         <div>
             <h3>{{__('Actores')}}</h3>
@@ -28,7 +30,7 @@
 
     </div>
 
-
+@endsection
 
 
 <script>
