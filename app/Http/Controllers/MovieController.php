@@ -66,7 +66,7 @@ class MovieController extends Controller
 
         return view('movie.form', [
             'movie'=>$movie,
-            'pageTitlle'=>_('Editing Movie: :name', ['name' => $movie->name])
+            'pageTitlle'=>__('Editing Movie: :name', ['name' => $movie->name])
         ]);
     }
 
@@ -82,7 +82,7 @@ class MovieController extends Controller
         ]);
 
 
-
+        return redirect()->route('movies.index');
 
     }
 

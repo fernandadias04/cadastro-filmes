@@ -17,7 +17,12 @@
             <tr>
 
                 <td><a href="#">{{$movie->name}}</a></td>
-                <td>Edit</td>
+                <td>
+                    <a href="{{route('movies.edit', ['id'=> $movie->id])}}">
+                        <button>Edit</button>
+                    </a>
+
+                </td>
                 <td>
                     <form method="POST" action="{{route('movies.destroy', ['id'=>$movie->id])}}" onsubmit="return confirm('Tem certeza que deseja remover {{ addslashes( $movie->name )}}?')">
                         @csrf

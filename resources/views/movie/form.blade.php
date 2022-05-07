@@ -8,6 +8,8 @@
 <div class="container mx-auto">
     <div class="grid-cols-1">
 
+
+
     <form method="POST" action="{{ isset($movie)? route('movies.update', ['id' => $movie->id] ) : route('movies.store') }}" >
         @csrf
 
